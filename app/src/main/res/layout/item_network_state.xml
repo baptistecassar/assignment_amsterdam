@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="com.example.pinch.utils.NetworkState" />
+
+        <import type="android.view.View" />
+
+        <import type="com.example.pinch.utils.Status" />
+
+        <variable
+            name="networkState"
+            type="NetworkState" />
+
+        <variable
+            name="retryListener"
+            type="android.view.View.OnClickListener" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/error_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@{networkState.msg}"
+            android:visibility="@{networkState.status == Status.FAILED ? View.VISIBLE  :View.INVISIBLE}" />
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="@{networkState.status == Status.RUNNING ? View.VISIBLE  :View.INVISIBLE}" />
+
+        <Button
+            android:id="@+id/retry_button"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:onClick="@{retryListener::onClick}"
+            android:text="Retry"
+            android:visibility="@{networkState.status == Status.FAILED ? View.VISIBLE  :View.INVISIBLE}" />
+    </LinearLayout>
+
+</layout>
