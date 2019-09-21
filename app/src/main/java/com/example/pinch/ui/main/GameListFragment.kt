@@ -7,12 +7,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.paging.PagedList
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.pinch.R
 import com.example.pinch.model.Game
 import com.example.pinch.utils.NetworkState
 import kotlinx.android.synthetic.main.main_fragment.*
 import org.koin.android.viewmodel.ext.android.viewModel
+
 
 class GameListFragment : Fragment() {
 
@@ -41,6 +43,7 @@ class GameListFragment : Fragment() {
 
     private fun initAdapter() {
         list_game.layoutManager = LinearLayoutManager(activity)
+        list_game.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
         list_game.adapter = adapter
         /**
          * Observe changes in the list of games

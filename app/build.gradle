@@ -78,4 +78,7 @@ dependencies {
     implementation "org.koin:koin-android-viewmodel:$koinVersion"
     // Koin testing tools
     androidTestImplementation("org.koin:koin-test:$koinVersion") { exclude group: 'org.mockito' }
+
+    //lib to load image
+    implementation 'com.squareup.picasso:picasso:2.71828'
 }

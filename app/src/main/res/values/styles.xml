@@ -8,6 +8,14 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="Text" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">@dimen/text_size</item>
+    </style>
+
+    <style name="Title" parent="Text">
+        <item name="android:textSize">@dimen/title_size</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 
     <style name="Card" parent="CardView.Light">
         <item name="cardUseCompatPadding">true</item>
