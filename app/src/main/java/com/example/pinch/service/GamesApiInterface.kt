@@ -3,7 +3,6 @@ package com.example.pinch.service
 import com.example.pinch.model.Cover
 import com.example.pinch.model.Game
 import io.reactivex.Single
-import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -18,7 +17,7 @@ interface GamesApiInterface {
         @Query("fields") fields: String,
         @Query("offset") offset: Int,
         @Query("limit") limit: Int
-    ): Call<List<Game>>
+    ): Single<List<Game>>
 
     @GET("covers/{id}")
     fun getGameImageId(

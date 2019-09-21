@@ -1,6 +1,9 @@
 package com.example.pinch.service
 
 import com.example.pinch.BuildConfig
+import com.example.pinch.model.Game
+import io.reactivex.Observable
+import io.reactivex.Single
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -60,8 +63,31 @@ class GamesApiClient {
         }
     }
 
+    fun getGameImages(game: Game): Single<Game> =
+        client.getGameImageId(game.coverId)
+            .flatMap { list ->
+                if (list.isNotEmpty() && !list[0].imageId.isNullOrBlank()) {
+                    val cover = list[0]
+                    game.coverUrl =
+                        "https://images.igdb.com/igdb/image/upload/t_cover_big/" + cover.imageId + ".jpg"
+                    game.thumbnailUrl =
+                        "https://images.igdb.com/igdb/image/upload/t_thumb/" + cover.imageId + ".jpg"
+                }
+                Single.just(game)
+            }
+
     fun getGames(offset: Int = 0, size: Int) =
         client.getGames(GAMES_FIELDS, offset, size)
+            .toObservable()
+            .flatMapIterable { items -> items }
+            .flatMap {
+                if (it.coverId != null)
+                    getGameImages(it).toObservable()
+                else
+                    Observable.just(it)
+            }
+            .toList()
+
 
     //================================================================================
     // companion object

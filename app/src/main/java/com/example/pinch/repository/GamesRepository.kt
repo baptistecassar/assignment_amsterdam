@@ -1,7 +1,6 @@
 package com.example.pinch.repository
 
 import androidx.annotation.MainThread
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.paging.toLiveData
@@ -9,10 +8,6 @@ import com.example.pinch.db.GameDatabase
 import com.example.pinch.model.Game
 import com.example.pinch.service.GamesApiClient
 import com.example.pinch.utils.Listing
-import com.example.pinch.utils.NetworkState
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
@@ -29,7 +24,18 @@ class GamesRepository(
     private val networkPageSize: Int = DEFAULT_NETWORK_PAGE_SIZE
 ) {
     companion object {
-        private const val DEFAULT_NETWORK_PAGE_SIZE = 20
+        private const val DEFAULT_NETWORK_PAGE_SIZE = 10
+    }
+
+    /**
+     * when data is refreshed cleans the database
+     * then calls [insertGamesIntoDb] to populate with new data
+     */
+    private fun refreshDb(gameList: List<Game>) {
+        db.runInTransaction {
+            db.clearAllTables()
+            insertGamesIntoDb(gameList)
+        }
     }
 
     /**
@@ -42,58 +48,6 @@ class GamesRepository(
             }
         }
     }
-
-
-    /**
-     * When refresh is called, we simply run a fresh network request and when it arrives, clear
-     * the database table and insert all new items in a transaction.
-     * <p>
-     * Since the PagedList already uses a database bound data source, it will automatically be
-     * updated after the database transaction is finished.
-     */
-    @MainThread
-    private fun refresh(boundaryCallback: GamesBoundaryCallback): LiveData<NetworkState> {
-        val networkState = MutableLiveData<NetworkState>()
-        networkState.value = NetworkState.LOADING
-        gamesApiClient.getGames(size = networkPageSize)
-            .enqueue(object : Callback<List<Game>> {
-                /**
-                 * Invoked when a network exception occurred talking to the server or when an unexpected
-                 * exception occurred creating the request or processing the response.
-                 */
-                override fun onFailure(call: Call<List<Game>>, t: Throwable) {
-                    // retrofit calls this on main thread so safe to call set value
-                    networkState.value = NetworkState.error(t.message)
-                }
-
-                /**
-                 * Invoked for a received HTTP response.
-                 *
-                 *
-                 * Note: An HTTP response may still indicate an application-level failure such as a 404 or 500.
-                 * Call [Response.isSuccessful] to determine if the response indicates success.
-                 */
-                override fun onResponse(call: Call<List<Game>>, response: Response<List<Game>>) {
-                    val list = response.body()
-                    if (response.isSuccessful && list != null) {
-                        ioExecutor.execute {
-                            //we set the offset for boundary callback
-                            boundaryCallback.offsetCount = list.size
-                            db.runInTransaction {
-                                db.clearAllTables()
-                                insertGamesIntoDb(list)
-                            }
-                            // since we are in bg thread now, post the result.
-                            networkState.postValue(NetworkState.LOADED)
-                        }
-                    } else {
-                        networkState.postValue(NetworkState.error("error code: ${response.code()}"))
-                    }
-                }
-            })
-        return networkState
-    }
-
 
     /**
      * Returns a Listing for the given subreddit.
@@ -113,7 +67,8 @@ class GamesRepository(
         // dispatched data in refreshTrigger
         val refreshTrigger = MutableLiveData<Unit>()
         val refreshState = Transformations.switchMap(refreshTrigger) {
-            refresh(boundaryCallback)
+            //refresh(boundaryCallback)
+            boundaryCallback.refresh(this::refreshDb)
         }
         // We use toLiveData Kotlin extension function here, you could also use LivePagedListBuilder
         val livePagedList = db.gameDao().getGamesPaged().toLiveData(
