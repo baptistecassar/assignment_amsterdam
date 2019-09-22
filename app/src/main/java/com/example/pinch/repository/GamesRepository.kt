@@ -4,9 +4,9 @@ import androidx.annotation.MainThread
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.paging.toLiveData
-import com.example.pinch.db.GameDatabase
+import com.example.pinch.data.db.GameDatabase
+import com.example.pinch.data.service.GamesApiClient
 import com.example.pinch.model.Game
-import com.example.pinch.service.GamesApiClient
 import com.example.pinch.utils.Listing
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors

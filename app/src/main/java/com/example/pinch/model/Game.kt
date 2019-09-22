@@ -1,10 +1,9 @@
 package com.example.pinch.model
 
 import androidx.room.Entity
-import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
-import java.util.*
+import java.io.Serializable
 
 /**
  * @author Baptiste Cassar
@@ -19,7 +18,4 @@ data class Game(
     @field:SerializedName("updated_at") val updatedAt: Long,
     @field:SerializedName("thumbnailUrl") var thumbnailUrl: String? = "",
     @field:SerializedName("coverUrl") var coverUrl: String? = ""
-) {
-    @Ignore
-    val calendar = Calendar.getInstance().apply { timeInMillis = updatedAt * 1000 }
-}
+) : Serializable

@@ -4,8 +4,8 @@ import androidx.annotation.MainThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedList
+import com.example.pinch.data.service.GamesApiClient
 import com.example.pinch.model.Game
-import com.example.pinch.service.GamesApiClient
 import com.example.pinch.utils.NetworkState
 import com.example.pinch.utils.PagingRequestHelper
 import com.example.pinch.utils.createStatusLiveData

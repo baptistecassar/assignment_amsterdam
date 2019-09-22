@@ -1,4 +1,4 @@
-package com.example.pinch.db
+package com.example.pinch.data.db
 
 import androidx.lifecycle.LiveData
 import androidx.paging.DataSource

@@ -1,6 +1,6 @@
 package com.example.pinch
 
-import com.example.pinch.service.GamesApiClient
+import com.example.pinch.data.service.GamesApiClient
 import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject

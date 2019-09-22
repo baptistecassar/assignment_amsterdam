@@ -1,4 +1,4 @@
-package com.example.pinch.service
+package com.example.pinch.data.service
 
 import com.example.pinch.BuildConfig
 import com.example.pinch.model.Game

@@ -2,9 +2,9 @@ package com.example.pinch
 
 import android.app.Application
 import androidx.room.Room
-import com.example.pinch.db.GameDatabase
+import com.example.pinch.data.db.GameDatabase
+import com.example.pinch.data.service.GamesApiClient
 import com.example.pinch.repository.GamesRepository
-import com.example.pinch.service.GamesApiClient
 import com.example.pinch.ui.main.GameListViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger

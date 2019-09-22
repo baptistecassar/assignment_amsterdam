@@ -8,6 +8,7 @@ import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pinch.R
+import com.example.pinch.callback.GameListCallback
 import com.example.pinch.databinding.ItemGameBinding
 import com.example.pinch.databinding.ItemNetworkStateBinding
 import com.example.pinch.model.Game
@@ -17,7 +18,10 @@ import com.example.pinch.utils.NetworkState
  * @author Baptiste Cassar
  * @date 2019-09-18
  **/
-class GameAdapter(private val retryCallback: () -> Unit) :
+class GameAdapter(
+    private val callback: GameListCallback,
+    private val retryCallback: () -> Unit
+) :
     PagedListAdapter<Game, RecyclerView.ViewHolder>(GAME_COMPARATOR) {
 
     private var networkState: NetworkState? = null
@@ -34,6 +38,7 @@ class GameAdapter(private val retryCallback: () -> Unit) :
         when (getItemViewType(position)) {
             R.layout.item_game -> (holder as GameViewHolder).apply {
                 binding.game = getItem(position)
+                binding.callback = callback
             }
             R.layout.item_network_state -> (holder as NetworkStateItemViewHolder).apply {
                 binding.networkState = networkState

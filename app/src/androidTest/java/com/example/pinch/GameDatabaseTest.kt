@@ -5,8 +5,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.test.runner.AndroidJUnit4
-import com.example.pinch.db.GameDatabase
-import com.example.pinch.db.GamesDao
+import com.example.pinch.data.db.GameDatabase
+import com.example.pinch.data.db.GamesDao
 import com.example.pinch.model.Game
 import org.junit.Assert.assertEquals
 import org.junit.Rule

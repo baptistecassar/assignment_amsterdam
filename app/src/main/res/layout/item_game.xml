@@ -6,6 +6,10 @@
     <data>
 
         <variable
+            name="callback"
+            type="com.example.pinch.callback.GameListCallback" />
+
+        <variable
             name="game"
             type="com.example.pinch.model.Game" />
     </data>
@@ -13,6 +17,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="@{(v) -> callback.openGame(game)}"
         android:padding="@dimen/block_padding">
 
         <ImageView
