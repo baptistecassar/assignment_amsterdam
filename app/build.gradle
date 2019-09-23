@@ -6,14 +6,14 @@ apply plugin: 'kotlin-kapt'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.example.pinch"
+        applicationId "com.example.project"
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField "String", "API_BASE_URL", "\"https://api-v3.igdb.com/\""
-        buildConfigField "String", "USER_KEY", "\"bdaad8002d05210d49196af359e2725e\""
+        buildConfigField "String", "USER_KEY", "\"xxx\""
     }
     buildTypes {
         debug {

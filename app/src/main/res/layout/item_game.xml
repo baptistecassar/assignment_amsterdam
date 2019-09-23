@@ -7,11 +7,11 @@
 
         <variable
             name="callback"
-            type="com.example.pinch.callback.GameListCallback" />
+            type="com.example.project.callback.GameListCallback" />
 
         <variable
             name="game"
-            type="com.example.pinch.model.Game" />
+            type="com.example.project.model.Game" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

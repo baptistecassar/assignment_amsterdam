@@ -9,7 +9,7 @@
 
         <variable
             name="game"
-            type="com.example.pinch.model.Game" />
+            type="com.example.project.model.Game" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
