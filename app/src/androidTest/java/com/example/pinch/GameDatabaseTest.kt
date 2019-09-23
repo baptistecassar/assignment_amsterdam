@@ -40,19 +40,30 @@ class GameDatabaseTest : KoinTest {
 
     @Test
     fun addGame() {
-        var game = Game(1, "test", "summary")
-        var test = gamesDao.getGames().getValueTesting()
-        gamesDao.insertGames(listOf(game))
+        clear()
+        val game = Game(1, 1, name = "game1", summary = "summary1")
+        gamesDao.insertGame(game)
+        val test = gamesDao.getGames().getValueTesting()
         assertEquals(1, test?.size)
-        assertEquals(game.id, test?.get(0)?.id)
-        game = Game(1, "test1", "summary")
+        assertEquals(game.gameId, test?.get(0)?.gameId)
+    }
+
+    @Test
+    fun editGame() {
+        addGame()
+        val game = Game(1, 1, name = "game edited", summary = "summary1")
         gamesDao.insertGames(listOf(game))
-        test = gamesDao.getGames().getValueTesting()
+        val test = gamesDao.getGames().getValueTesting()
         assertEquals(1, test?.size)
         assertEquals(game.name, test?.get(0)?.name)
-        game = Game(2, "test1", "summary")
+    }
+
+    @Test
+    fun addGames() {
+        addGame()
+        val game = Game(2, 2, name = "game2", summary = "summary2")
         gamesDao.insertGames(listOf(game))
-        test = gamesDao.getGames().getValueTesting()
+        val test = gamesDao.getGames().getValueTesting()
         assertEquals(2, test?.size)
     }
 }
