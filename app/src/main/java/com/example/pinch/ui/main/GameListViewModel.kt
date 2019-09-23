@@ -33,6 +33,13 @@ class GameListViewModel(
     fun refresh() {
         listing.value?.refresh?.invoke()
     }
+
+    /**
+     * Cleared all references and petitions boundary callback
+     */
+    override fun onCleared() {
+        listing.value?.clear?.invoke()
+    }
 }
 
 fun <T> liveData(data: T): LiveData<T> {

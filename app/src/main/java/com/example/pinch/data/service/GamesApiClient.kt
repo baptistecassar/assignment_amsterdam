@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit
 /**
  * @author Baptiste Cassar
  **/
-class GamesApiClient {
+class GamesApiClient : GamesDataSource {
 
     private var client: GamesApiInterface
 
@@ -68,7 +68,7 @@ class GamesApiClient {
      * calls ws to get the [Cover] linked to a [Game]
      * we use the [Cover.imageId] to get the cover and thumbnail images' urls of the game
      */
-    fun getGameImages(game: Game): Single<Game> =
+    private fun getGameImages(game: Game): Single<Game> =
         client.getGameImageId(game.coverId)
             .flatMap { list ->
                 if (list.isNotEmpty() && !list[0].imageId.isNullOrBlank()) {
@@ -85,7 +85,7 @@ class GamesApiClient {
      * gets a list of games by calling ws
      * if [Game.coverId] is not null calls [getGameImages] to get the game's images' url
      */
-    fun getGames(offset: Int = 0, size: Int) =
+    override fun getGames(offset: Int, size: Int) =
         client.getGames(GAMES_FIELDS, offset, size)
             .toObservable()
             .flatMapIterable { items -> items }

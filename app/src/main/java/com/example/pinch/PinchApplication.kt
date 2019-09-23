@@ -42,7 +42,10 @@ class PinchApplication : Application() {
                 Room.databaseBuilder(get(), GameDatabase::class.java, "games_database").build()
             }
             single { get<GameDatabase>().gameDao() }
-            single { GamesRepository(get(), get()) }
+            single {
+                val apiClient: GamesApiClient = get()
+                GamesRepository(get(), apiClient)
+            }
         }
         // declared ViewModel using the viewModel keyword
         val viewModelModule = module {

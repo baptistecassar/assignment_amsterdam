@@ -1,4 +1,4 @@
-package com.example.pinch
+package com.example.pinch.data
 
 import androidx.annotation.Nullable
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
@@ -7,9 +7,10 @@ import androidx.lifecycle.Observer
 import com.example.pinch.data.db.GameDatabase
 import com.example.pinch.data.db.GamesDao
 import com.example.pinch.model.Game
+import org.junit.*
 import org.junit.Assert.assertEquals
-import org.junit.Rule
-import org.junit.Test
+import org.koin.core.context.loadKoinModules
+import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
 import org.koin.test.inject
 import java.util.concurrent.CountDownLatch
@@ -27,6 +28,11 @@ class GameDatabaseTest : KoinTest {
 
     private val gamesDao: GamesDao by inject()
     private val gameDatabase: GameDatabase by inject()
+
+    @After
+    fun clearDatabase() {
+        gameDatabase.clearAllTables()
+    }
 
     @Test
     fun clear() {
@@ -63,6 +69,23 @@ class GameDatabaseTest : KoinTest {
         val test = gamesDao.getGames().getValueTesting()
         assertEquals(2, test?.size)
     }
+
+    companion object {
+        /**
+         * Override default Koin configuration to use Room in-memory database
+         */
+        @BeforeClass
+        @JvmStatic
+        fun before() {
+            loadKoinModules()
+        }
+
+        @AfterClass
+        @JvmStatic
+        fun after() {
+            stopKoin()
+        }
+    }
 }
 
 @Throws(InterruptedException::class)
@@ -77,6 +100,6 @@ fun <T> LiveData<T>.getValueTesting(): T? {
         }
     }
     observeForever(observer)
-    latch.await(2, TimeUnit.SECONDS)
+    latch.await(30, TimeUnit.SECONDS)
     return data[0] as T?
 }

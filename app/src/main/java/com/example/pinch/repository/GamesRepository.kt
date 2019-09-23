@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.paging.toLiveData
 import com.example.pinch.data.db.GameDatabase
-import com.example.pinch.data.service.GamesApiClient
+import com.example.pinch.data.service.GamesDataSource
 import com.example.pinch.model.Game
 import com.example.pinch.utils.Listing
 import java.util.concurrent.Executor
@@ -18,7 +18,7 @@ import java.util.concurrent.Executors
  **/
 class GamesRepository(
     private val db: GameDatabase,
-    private val gamesApiClient: GamesApiClient,
+    private val webservice: GamesDataSource,
     private val ioExecutor: Executor = Executors.newSingleThreadExecutor(),
     private val networkPageSize: Int = DEFAULT_NETWORK_PAGE_SIZE
 ) {
@@ -56,10 +56,10 @@ class GamesRepository(
         // create a boundary callback which will observe when the user reaches to the edges of
         // the list and update the database with extra data.
         val boundaryCallback = GamesBoundaryCallback(
-            webservice = gamesApiClient,
+            webservice = webservice,
             handleResponse = this::insertGamesIntoDb,
             ioExecutor = ioExecutor,
-            networkPageSize = networkPageSize
+            networkPageSize = pageSize
         )
         // we are using a mutable live data to trigger refresh requests which eventually calls
         // refresh method and gets a new live data. Each refresh request by the user becomes a newly
@@ -82,6 +82,9 @@ class GamesRepository(
             },
             refresh = {
                 refreshTrigger.value = null
+            },
+            clear = {
+                boundaryCallback.cleared()
             },
             refreshState = refreshState
         )

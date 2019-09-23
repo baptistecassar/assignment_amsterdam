@@ -4,7 +4,7 @@ import androidx.annotation.MainThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedList
-import com.example.pinch.data.service.GamesApiClient
+import com.example.pinch.data.service.GamesDataSource
 import com.example.pinch.model.Game
 import com.example.pinch.utils.NetworkState
 import com.example.pinch.utils.PagingRequestHelper
@@ -25,7 +25,7 @@ import java.util.concurrent.Executor
  * rate limiting using the PagingRequestHelper class.
  **/
 class GamesBoundaryCallback(
-    private val webservice: GamesApiClient,
+    private val webservice: GamesDataSource,
     private val handleResponse: (List<Game>) -> Unit,
     private val ioExecutor: Executor,
     private val networkPageSize: Int
@@ -94,7 +94,9 @@ class GamesBoundaryCallback(
         return networkState
     }
 
-    /** Clear all references **/
+    /**
+     * Clear all references
+     **/
     fun cleared() {
         compositeDisposable.clear()
     }
