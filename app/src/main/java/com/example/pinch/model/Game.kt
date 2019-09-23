@@ -16,6 +16,6 @@ data class Game(
     @field:SerializedName("name") val name: String? = "",
     @field:SerializedName("summary") val summary: String? = "",
     @field:SerializedName("updated_at") val updatedAt: Long? = null,
-    @field:SerializedName("thumbnailUrl") var thumbnailUrl: String? = "",
-    @field:SerializedName("coverUrl") var coverUrl: String? = ""
+    @field:SerializedName("thumbnailUrl") var thumbnailUrl: String? = null,
+    @field:SerializedName("coverUrl") var coverUrl: String? = null
 ) : Serializable

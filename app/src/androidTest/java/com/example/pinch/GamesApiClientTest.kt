@@ -8,8 +8,8 @@ import org.koin.test.inject
 
 /**
  * @author Baptiste Cassar
- * @date 2019-09-18
  **/
+
 class GamesApiClientTest : KoinTest {
 
     private val gamesApiClient: GamesApiClient by inject()
