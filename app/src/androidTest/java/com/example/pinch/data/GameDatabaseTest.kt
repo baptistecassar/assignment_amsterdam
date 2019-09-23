@@ -19,7 +19,6 @@ import java.util.concurrent.TimeUnit
 
 /**
  * @author Baptiste Cassar
- * @date 2019-09-18
  **/
 class GameDatabaseTest : KoinTest {
 
