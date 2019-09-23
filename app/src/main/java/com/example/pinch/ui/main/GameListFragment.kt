@@ -10,7 +10,6 @@ import androidx.lifecycle.Observer
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.pinch.MainActivity
 import com.example.pinch.callback.GameListCallback
 import com.example.pinch.databinding.FragmentGameListBinding
 import com.example.pinch.model.Game
@@ -18,6 +17,11 @@ import com.example.pinch.utils.NetworkState
 import kotlinx.android.synthetic.main.fragment_game_list.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
+/**
+ * @author Baptiste Cassar
+ * displays a list of games paginated with [GameAdapter]
+ * handles click on item of the list by opening [GameDetailsFragment]
+ */
 
 class GameListFragment : Fragment(), GameListCallback {
 
@@ -31,11 +35,6 @@ class GameListFragment : Fragment(), GameListCallback {
 
     companion object {
         fun newInstance() = GameListFragment()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        //(activity as? MainActivity)?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     override fun onCreateView(
@@ -57,12 +56,11 @@ class GameListFragment : Fragment(), GameListCallback {
         list_game.layoutManager = LinearLayoutManager(activity)
         list_game.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
         list_game.adapter = adapter
-        /**
-         * Observe changes in the list of games
-         */
+        //Observes changes in the list of games
         gameListViewModelPaging.dataSource.observe(this, Observer<PagedList<Game>> {
             adapter.submitList(it)
         })
+        //Observes changes in the network state
         gameListViewModelPaging.networkState.observe(this, Observer {
             adapter.setNetworkState(it)
         })
@@ -81,6 +79,10 @@ class GameListFragment : Fragment(), GameListCallback {
     // @implements GameListCallback
     //================================================================================
 
+    /**
+     * callback called to handle click on an item of the list
+     * opens [GameDetailsFragment]
+     */
     override fun openGame(game: Game) {
         (activity as? MainActivity)?.startFragment(GameDetailsFragment.newInstance(game))
     }

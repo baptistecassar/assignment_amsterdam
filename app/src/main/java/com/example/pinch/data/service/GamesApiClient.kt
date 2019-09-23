@@ -1,6 +1,7 @@
 package com.example.pinch.data.service
 
 import com.example.pinch.BuildConfig
+import com.example.pinch.model.Cover
 import com.example.pinch.model.Game
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -63,6 +64,10 @@ class GamesApiClient {
         }
     }
 
+    /**
+     * calls ws to get the [Cover] linked to a [Game]
+     * we use the [Cover.imageId] to get the cover and thumbnail images' urls of the game
+     */
     fun getGameImages(game: Game): Single<Game> =
         client.getGameImageId(game.coverId)
             .flatMap { list ->
@@ -76,6 +81,10 @@ class GamesApiClient {
                 Single.just(game)
             }
 
+    /**
+     * gets a list of games by calling ws
+     * if [Game.coverId] is not null calls [getGameImages] to get the game's images' url
+     */
     fun getGames(offset: Int = 0, size: Int) =
         client.getGames(GAMES_FIELDS, offset, size)
             .toObservable()

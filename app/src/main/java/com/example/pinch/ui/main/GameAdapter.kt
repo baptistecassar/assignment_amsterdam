@@ -1,6 +1,5 @@
 package com.example.pinch.ui.main
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,8 +15,10 @@ import com.example.pinch.utils.NetworkState
 
 /**
  * @author Baptiste Cassar
- * @date 2019-09-18
+ * displays a list of games paginated
+ * displays an extra row while the next page is being loaded
  **/
+
 class GameAdapter(
     private val callback: GameListCallback,
     private val retryCallback: () -> Unit
@@ -43,7 +44,6 @@ class GameAdapter(
             R.layout.item_network_state -> (holder as NetworkStateItemViewHolder).apply {
                 binding.networkState = networkState
                 binding.retryListener = View.OnClickListener {
-                    Log.v("TEST", "ETST")
                     retryCallback()
                 }
             }

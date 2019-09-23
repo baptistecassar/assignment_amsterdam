@@ -10,7 +10,6 @@ import com.example.pinch.model.Game
 
 /**
  * @author Baptiste Cassar
- * @date 2019-09-18
  * Data Access Object for the games table.
  **/
 @Dao

@@ -7,10 +7,15 @@ import com.squareup.picasso.Picasso
 
 /**
  * @author Baptiste Cassar
- * @date 15/12/2018
+ * class used for all methods linked to images
  **/
 object ImageUtils {
 
+    /**
+     * loads image with an url using [Picasso]
+     * before loading [defaultDrawable] or [R.color.gray_light] is used
+     * if an error occurs [errorDrawable] is used
+     */
     @JvmStatic
     fun loadImage(
         imageView: ImageView,

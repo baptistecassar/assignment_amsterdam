@@ -8,6 +8,9 @@ import com.example.pinch.model.Game
 import com.example.pinch.repository.GamesRepository
 import com.example.pinch.utils.Listing
 
+/**
+ * @author Baptiste Cassar
+ */
 
 class GameListViewModel(
     private val gamesRepository: GamesRepository

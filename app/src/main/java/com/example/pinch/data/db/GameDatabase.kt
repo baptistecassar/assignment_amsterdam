@@ -6,7 +6,6 @@ import com.example.pinch.model.Game
 
 /**
  * @author Baptiste Cassar
- * @date 2019-09-18
  * The Room Database that contains the Game table.
  **/
 

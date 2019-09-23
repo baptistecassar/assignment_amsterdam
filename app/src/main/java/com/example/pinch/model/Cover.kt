@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 /**
  * @author Baptiste Cassar
- * @date 2019-09-20
+ * data class used to get the links to a games' images
  **/
 data class Cover(
     @SerializedName("id") val id: Int,

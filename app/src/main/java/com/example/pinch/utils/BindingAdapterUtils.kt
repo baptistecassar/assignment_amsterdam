@@ -7,7 +7,9 @@ import androidx.databinding.BindingAdapter
 
 /**
  * @author Baptiste Cassar
+ * contains all data binding methods for this project
  **/
+
 object BindingAdapterUtils {
 
     /**

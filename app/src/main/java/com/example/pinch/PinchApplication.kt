@@ -14,6 +14,8 @@ import org.koin.dsl.module
 
 /**
  * @author Baptiste Cassar
+ * uses Koin as Dependency Injection framework
+ * declares the modules used in this project
  **/
 class PinchApplication : Application() {
 

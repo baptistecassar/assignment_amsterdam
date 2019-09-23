@@ -13,7 +13,6 @@ import java.util.concurrent.Executors
 
 /**
  * @author Baptiste Cassar
- * @date 2019-09-20
  * Repository implementation that uses a database PagedList + a boundary callback to return a
  * listing that loads in pages.
  **/

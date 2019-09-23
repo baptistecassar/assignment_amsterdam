@@ -1,12 +1,19 @@
-package com.example.pinch
+package com.example.pinch.ui.main
 
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.example.pinch.R
 import com.example.pinch.data.service.GamesApiClient
-import com.example.pinch.ui.main.GameListFragment
+
+/**
+ * @author Baptiste Cassar
+ * Main Activity of this project
+ * opens [GameListFragment] when created
+ * handles navigation in this project
+ */
 
 class MainActivity : AppCompatActivity() {
 

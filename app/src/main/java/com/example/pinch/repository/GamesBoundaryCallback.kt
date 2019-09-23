@@ -18,7 +18,6 @@ import java.util.concurrent.Executor
 
 /**
  * @author Baptiste Cassar
- * @date 2019-09-20
  * This boundary callback gets notified when user reaches to the edges of the list such that the
  * database cannot provide any more data.
  * <p>
